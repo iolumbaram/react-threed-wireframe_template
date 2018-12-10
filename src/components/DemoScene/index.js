@@ -31,6 +31,12 @@ class DemoScene extends React.Component {
     };
   }
 
+  componentDidMount() {
+    // pass the requested ref here
+    this.props.passRefUpward(this.refs);
+
+  }    
+
   render() {
     const width = window.innerWidth; // canvas width
     const height = window.innerHeight; // canvas height
@@ -69,4 +75,4 @@ class DemoScene extends React.Component {
   }
 }
 
-ReactDOM.render(<DemoScene/>, document.body);
+ReactDOM.render(<DemoScene/>, document.getElementById('gjs'));
