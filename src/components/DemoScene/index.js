@@ -13,8 +13,10 @@ class DemoScene extends React.Component {
 
     this.state = {
       cubeRotation: new THREE.Euler(),
+      domRef: null
     };
 
+    // this.setState({domRef:props.inputRef});
     this._onAnimate = () => {
       // we will get this callback every frame
 
@@ -33,7 +35,14 @@ class DemoScene extends React.Component {
 
   componentDidMount() {
     // pass the requested ref here
-    this.props.passRefUpward(this.refs);
+    // this.props.passRefUpward(this.refs);
+    // this.setState({domRef: this.props.domID}, function () {
+    //   console.log("so, dom id recieved? " +this.state.domRef);
+    // });
+    this.setState({domRef: this.props.pvalue}, function () {
+      console.log("props @ child " +this.state.domRef);
+      // ReactDOM.createPortal(<Childtest/>, document.getElementById("gjs"));
+    });
 
   }    
 
@@ -41,7 +50,9 @@ class DemoScene extends React.Component {
     const width = window.innerWidth; // canvas width
     const height = window.innerHeight; // canvas height
 
-    return (<React3
+    return (
+    
+    <React3
       mainCamera="camera" // this points to the perspectiveCamera which has the name set to "camera" below
       width={width}
       height={height}
@@ -71,8 +82,12 @@ class DemoScene extends React.Component {
           />
         </mesh>
       </scene>
-    </React3>);
+    </React3>
+    );
   }
 }
 
-ReactDOM.render(<DemoScene/>, document.getElementById('gjs'));
+ReactDOM.render(<DemoScene/>, document.body);
+
+
+export default DemoScene;
