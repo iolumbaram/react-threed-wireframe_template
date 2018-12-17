@@ -5,7 +5,13 @@ import ReactDOM from 'react-dom';
 import { findDOMNode } from 'react-dom'
 // import DemoScene from './DemoScene';
 // import DemoScene from './index.js';
-import Childtest from './Childtest.js';
+// import Childtest from './Childtest.js';
+// import GrapesjsIndex from '../Grapesjs-lib/countdown_index.js'
+import loadComponents from '../Grapesjs-lib/components';
+import loadBlocks from '../Grapesjs-lib/blocks';
+import {
+  countdownRef
+} from '../Grapesjs-lib/consts';
 
 class GrapesEditor extends Component {
     constructor(props){
@@ -15,6 +21,8 @@ class GrapesEditor extends Component {
             value: 'gjs',
             valhtml: null 
         }
+
+
         // this.focusTextInput = this.focusTextInput.bind(this);
     }
     shouldComponentUpdate(){
@@ -25,16 +33,14 @@ class GrapesEditor extends Component {
             container : '#gjs',
             components: '<div class="txt-red">Hello world!</div>',
             style: '.txt-red{color: red}',
+            script: newPlugin(),
+            plugins: ['gjs-component-countdown']
         });
         // var el2 = ReactDOM.findDOMNode(this.refs.ref2);
         // this.setState('gracias')
         // focusTextInput(this.refs.el1)
-
         // this.setState({value: "12312"});
-
         //   console.log("done "+this.state.value)
-
-
         //   this.setState({value: this.refs.el1}, function () {
         //     console.log(this.state.value);
         // });
@@ -63,32 +69,62 @@ class GrapesEditor extends Component {
 
     render() {
         return (
-            <div id ='gjs' ref='el1'>
-                <Childtest pvalue={this.state.valhtml}/>
-            </div>
+            // <div id ='gjs' ref='el1'>
+            //     <Childtest pvalue={this.state.valhtml}/>
+            // </div>
+            // <div><GrapesjsIndex/></div>
+            <div id ='gjs'>elllo</div>
         );
     }
 }
+function newPlugin(){
+    grapesjs.plugins.add('gjs-component-countdown', (editor, opts = {}) => {
+        let c = opts;
+      
+        let defaults = {
+          blocks: [countdownRef],
+          defaultStyle: true,
+          startTime: '',
+          endText: 'EXPIRED',
+          dateInputType: 'date',
+          countdownClsPfx: 'countdown',
+          labelCountdown: 'Countdown',
+          labelCountdownCategory: 'Extra',
+          labelDays: 'days',
+          labelHours: 'hours',
+          labelMinutes: 'minutes',
+          labelSeconds: 'seconds',
+        };
+        for (let name in defaults) {
+            if (!(name in c))
+            c[name] = defaults[name];
+        }
+        loadComponents(editor, c);
+        loadBlocks(editor, c);
+    })
+    // console.log("hello")
+}
 
-class ChildAnimated extends React.Component {
+
+// class ChildAnimated extends React.Component {
     
-    componentWillAppear(callback){}
+//     componentWillAppear(callback){}
   
-    componentDidMount(){
-    //   const { parent, child } = this.props.node();
-    //   console.log({parent, child});
-      // Console return 
-      // {
-      // parent: div,
-      // child: null
-      // }
-    }
+//     componentDidMount(){
+//     //   const { parent, child } = this.props.node();
+//     //   console.log({parent, child});
+//       // Console return 
+//       // {
+//       // parent: div,
+//       // child: null
+//       // }
+//     }
     
-    render(){
-      return(
-        <h1>LALALLAL</h1>
-      )
-    }
-  }
+//     render(){
+//       return(
+//         <div>lalalal</div>
+//       )
+//     }
+//   }
 export default GrapesEditor;
 
